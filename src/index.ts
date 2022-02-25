@@ -43,6 +43,34 @@ events.serverOpen.on(() => {
     target: PlayerWildcardCommandSelector,
     permission: CxxString
   });
+
+  command.register("removepermission", "Adds a Permision for a player").overload((p, o, op) => {
+    let player = o.getEntity();
+    
+    if ((player && manager.has(player, "permissionsx.command.removepermission")) || o.isServerCommandOrigin()) {
+      let targets = p.target.newResults(o);
+      let perm = p.permission;
+      
+      if (!manager.exists(perm)) {
+        out(player, `§cPermission "${perm}" doesn't exists§r`)
+      } else if (targets.length == 1) {
+        manager.remove(targets[0], perm);
+        out(player, `§removed Permission "${perm}" to "${targets[0].getName()} successfully!§r`);
+      } else if (targets.length > 1) {
+        let players = "";
+        
+        targets.forEach(p_ => {
+          manager.remove(p_, perm);
+          players += p_.getName();
+        });
+        
+        out(player, `§aRemoved Permission "${perm}" to ${players} successfully!§r`);
+      }
+    }
+  }, {
+    target: PlayerWildcardCommandSelector,
+    permission: CxxString
+  });
   
   manager.register("permissionsx.command.addpermission", "addpermission");
   manager.register("permissionsx.command.removepermission", "removepermission");

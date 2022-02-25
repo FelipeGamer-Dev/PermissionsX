@@ -32,3 +32,5 @@ it will remove the permission if the target have the permission.
 The Permissions API can be finded in src/lib/permissions.ts
 
 > You can find some examples in examples directory.
+
+### "OR" permissions + Permission groups comming soon in v2.
